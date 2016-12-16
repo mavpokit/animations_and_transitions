@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_scene_1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <!--android:orientation="vertical"-->
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="Name" />
+    <ImageView
+        android:id="@+id/imageview_putin"
+        android:src="@drawable/putin"
+        android:layout_centerInParent="true"
+        android:layout_width="@dimen/square_size_expanded"
+        android:layout_height="@dimen/square_size_expanded" />
+</RelativeLayout>

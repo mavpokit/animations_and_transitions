@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    >
+
+    <Button
+        android:id="@+id/buttonDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="default" />
+
+
+    <Button
+        android:id="@+id/buttonAlpha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@id/buttonDefault"
+        android:text="alpha" />
+
+    <Button
+        android:id="@+id/buttonSlide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@id/buttonAlpha"
+        android:text="slide" />
+
+    <Button
+        android:id="@+id/buttonScale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="scale" />
+
+    <Button
+        android:id="@+id/buttonRotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonScale"
+        android:text="rotate" />
+
+    <Button
+        android:id="@+id/buttonCombined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonRotate"
+        android:text="combined" />
+
+
+    <ImageView
+        android:id="@+id/imageviewFish"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:src="@drawable/fish_small"
+        android:layout_centerHorizontal="true"
+        />
+
+    <!--android:layout_below="@id/buttonSlide"-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/imageviewFish"
+        android:layout_margin="2dp"
+        android:id="@+id/separator_view"
+        android:background="@android:color/black"/>
+
+
+    <FrameLayout
+        android:id="@+id/fragment_wt_container"
+        android:layout_below="@id/separator_view"
+        android:background="@color/backg1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+</RelativeLayout>
