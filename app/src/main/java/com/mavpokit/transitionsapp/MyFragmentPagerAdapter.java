@@ -14,7 +14,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private static final String TAG = "-----PagerAdapter-----";
 
     final int PAGE_COUNT=3;
-    private String[] TAB_NAMES = new String[]{"Layout Transitions","Transitions Framework","Window Transitions"};
+    private String[] TAB_NAMES = new String[]{"Window Transitions","Transitions Framework","Layout Transitions"};
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -26,9 +26,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         Log.d(TAG,"getItem "+position);
 
         switch (position){
-            case 0: return new FragmentLT();
+            case 0: return new FragmentWT();
             case 1: return new FragmentTF();
-            case 2: return new FragmentWT();
+            case 2: return new FragmentLT();
             default:return null;
         }
 

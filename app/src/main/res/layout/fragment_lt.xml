@@ -9,14 +9,17 @@
     <CheckBox
         android:id="@+id/checkBoxLT"
         tools:text="layout transitions"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="layout transitions" />
 
     <Button
         android:id="@+id/buttonAdd"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="Add Button" />
 
     <TextView

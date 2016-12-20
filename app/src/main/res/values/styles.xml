@@ -6,6 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:textColorSecondary">@color/textColorSecondary</item>-->
     </style>
+
+    <!-- Dark Buttons -->
+    <style name="ThemeOverlay.MyDarkButton" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorButtonNormal">@color/colorPrimaryLight</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:textColor">@color/darkGray</item>
+    </style>
+
+
 
 </resources>
