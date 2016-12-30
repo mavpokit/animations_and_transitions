@@ -35,6 +35,7 @@
         android:id="@+id/imageview_putin"
         android:src="@drawable/putin"
         android:layout_centerInParent="true"
+        android:elevation="20dp"
         android:layout_width="@dimen/square_size_normal"
         android:layout_height="@dimen/square_size_normal" />
 </RelativeLayout>

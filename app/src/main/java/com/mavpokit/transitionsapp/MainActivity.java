@@ -1,6 +1,5 @@
 package com.mavpokit.transitionsapp;
 
-import android.animation.LayoutTransition;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,11 +15,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,12 +67,15 @@ public class MainActivity extends AppCompatActivity {
     private FragmentPagerAdapter getPagerAdapter() {
         return new FragmentPagerAdapter(getSupportFragmentManager()) {
 
-            private Fragment[] fragments = new Fragment[]{new FragmentWT(), new FragmentTF(), new FragmentLT()};
+            private Fragment[] fragments = new Fragment[]{new FragmentWT(), new FragmentTF(), new FragmentLT(),
+                    new FragmentPA(), new FragmentAM(), new FragmentGif()};
 
             private static final String TAG = "-----PagerAdapter-----";
 
-            final int PAGE_COUNT = 3;
-            private String[] TAB_NAMES = new String[]{"Window Transitions", "Transitions Framework", "Layout Transitions"};
+            final int PAGE_COUNT = 6;
+            private String[] TAB_NAMES = new String[]{"Window\nTransitions", "Transitions\nFramework",
+                    "Layout\nTransitions", "Property\nanimation",
+                    "Animated\nmarkers","Gif\nanimation"};
 
             @Override
             public Fragment getItem(int position) {

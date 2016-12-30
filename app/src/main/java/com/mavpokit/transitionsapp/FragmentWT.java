@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -55,6 +56,8 @@ public class FragmentWT extends Fragment {
                 startActivity(intent);
             }
         });
+//        if (Build.VERSION.SDK_INT>=21)
+//            buttonDefault.setTranslationZ(50);
 
         buttonAlpha.setOnClickListener(new View.OnClickListener() {
             @Override
