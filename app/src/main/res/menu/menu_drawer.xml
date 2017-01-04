@@ -4,15 +4,27 @@
         <item
             android:id="@+id/menu_1"
             android:icon="@mipmap/m1"
-            android:title="Layout transitions" />
+            android:title="Animated markers" />
         <item
             android:id="@+id/menu_2"
             android:icon="@mipmap/m2"
-            android:title="Transitions framework" />
+            android:title="Window transitions" />
         <item
             android:id="@+id/menu_3"
             android:icon="@mipmap/m3"
-            android:title="Window transitions" />
+            android:title="Transitions framework" />
+        <item
+            android:id="@+id/menu_4"
+            android:icon="@mipmap/m1"
+            android:title="Property animation" />
+        <item
+            android:id="@+id/menu_5"
+            android:icon="@mipmap/m2"
+            android:title="Layout Transitions" />
+        <item
+            android:id="@+id/menu_6"
+            android:icon="@mipmap/m3"
+            android:title="Gif animation" />
     </group>
 
     <item android:title="Sub items">

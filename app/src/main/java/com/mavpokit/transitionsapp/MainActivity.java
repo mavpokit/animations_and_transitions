@@ -67,15 +67,24 @@ public class MainActivity extends AppCompatActivity {
     private FragmentPagerAdapter getPagerAdapter() {
         return new FragmentPagerAdapter(getSupportFragmentManager()) {
 
-            private Fragment[] fragments = new Fragment[]{new FragmentWT(), new FragmentTF(), new FragmentLT(),
-                    new FragmentPA(), new FragmentAM(), new FragmentGif()};
+            private Fragment[] fragments = new Fragment[]{
+                    new FragmentAM(),
+                    new FragmentWT(),
+                    new FragmentTF(),
+                    new FragmentPA(),
+                    new FragmentLT(),
+                    new FragmentGif()};
 
             private static final String TAG = "-----PagerAdapter-----";
 
             final int PAGE_COUNT = 6;
-            private String[] TAB_NAMES = new String[]{"Window\nTransitions", "Transitions\nFramework",
-                    "Layout\nTransitions", "Property\nanimation",
-                    "Animated\nmarkers","Gif\nanimation"};
+            private String[] TAB_NAMES = new String[]{
+                    "Animated\nmarkers",
+                    "Window\nTransitions",
+                    "Transitions\nFramework",
+                    "Property\nanimation",
+                    "Layout\nTransitions",
+                    "Gif\nanimation"};
 
             @Override
             public Fragment getItem(int position) {

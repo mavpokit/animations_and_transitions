@@ -4,8 +4,10 @@ import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -16,7 +18,10 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,18 +29,20 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Alex on 21.12.2016.
  */
 
-public class FragmentAM extends Fragment implements OnMapReadyCallback {
+public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnClickListener {
     private static final String TAG = "-----FragmentAM-----";
     private static final String MAP_FRAGMENT_TAG = "MAP_FRAGMENT";
 
@@ -53,6 +60,7 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         View fragmentContainer = inflater.inflate(R.layout.fragment_am, container, false);
+//doesn't work with fragments
 //        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
@@ -60,10 +68,18 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback {
             mapFragment = new SupportMapFragment();
             replaceFragment(mapFragment, MAP_FRAGMENT_TAG, false);
         }
+
 //        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
 //                .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
+
+        Button buttonL1 = (Button)fragmentContainer.findViewById(R.id.buttonLocation1);
+        Button buttonL2 = (Button)fragmentContainer.findViewById(R.id.buttonLocation2);
+        ImageButton buttonL3 = (ImageButton)fragmentContainer.findViewById(R.id.buttonLocation3);
+        buttonL1.setOnClickListener(this);
+        buttonL2.setOnClickListener(this);
+        buttonL3.setOnClickListener(this);
 
         return fragmentContainer;
     }
@@ -93,33 +109,94 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback {
         mapSettings.setZoomControlsEnabled(true);
         mapSettings.setCompassEnabled(true);
 
-        LatLng mapCenter = new LatLng(50.444938, 30.520794);
-
 //        mMap.addMarker(new MarkerOptions().position(mapCenter).title("Marker in Kiev"));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 13));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 3));
 
-        // Flat markers will rotate when the map is rotated,
-        // and change perspective when the map is tilted.
-        mMap.addMarker(new MarkerOptions()
-                .title("Marker in Kiev")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.radioact1))
-                .position(mapCenter)
-//                .flat(true)
-//                .rotation(245)
-        );
+        animateCamera(11,2000,new LatLng(50.444938, 30.520794));
 
-        CameraPosition cameraPosition = CameraPosition.builder()
-                .target(mapCenter)
-                .zoom(13)
-//                .bearing(90)
-                .build();
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
 
-        // Animate the change in camera view over 2 seconds
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
-                2000, null);
+                // finalLatLng is known
+
+                Projection projecion = mMap.getProjection();
+                Point point = projecion.toScreenLocation(latLng);
+                point.offset(0,dpToPixels(-200));
+                LatLng startLatLng = projecion.fromScreenLocation(point);
+
+                Marker marker =  mMap.addMarker(new MarkerOptions()
+                                .title("Achtung!")
+                                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.radioact1))
+//                                .position(latLng)
+                                .position(startLatLng)
+                                .anchor(0.5f,0.5f)
+                //                .flat(true)
+                //                .rotation(245)
+                );
+
+                ObjectAnimator posAnimator = ObjectAnimator.ofObject(marker,"position",new LatLngEvaluator(),startLatLng,latLng);
+                posAnimator.setDuration(200);
+//                posAnimator.setInterpolator(new BounceInterpolator());
+//                posAnimator.start();
+
+                ObjectAnimator rotAnimator = ObjectAnimator.ofFloat(marker,"rotation",180,360);
+                rotAnimator.setDuration(400);
+
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(marker,"alpha",0,1);
+                alphaAnimator.setDuration(600);
+//                rotAnimator.start();
+
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.playTogether(posAnimator,rotAnimator,alphaAnimator);
+                animatorSet.start();
+
+
+            }
+        });
 
     }
 
+    private int dpToPixels(int dp) {
+        return (int)(dp * getResources().getDisplayMetrics().density + 0.5f );
+    }
 
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.buttonLocation1:
+                animateCamera(8,2000,new LatLng(50.444938, 20.520794));
+                break;
+            case R.id.buttonLocation2:
+                animateCamera(10,2000,new LatLng(50.444938, 10.520794));
+                break;
+            case R.id.buttonLocation3:
+                animateCamera(11,2000,new LatLng(50.444938, 30.520794));
+                break;
+
+        }
+    }
+
+    private void animateCamera(int zoom, int time_ms, LatLng latLng) {
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target(latLng)
+                .zoom(zoom)
+//                .bearing(90)
+                .build();
+
+        // Animate the change in camera view over time_ms milliseconds
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),time_ms, null);
+
+    }
+
+    class LatLngEvaluator implements TypeEvaluator<LatLng> {
+
+        @Override
+        public LatLng evaluate(float fraction, LatLng start, LatLng end) {
+            return new LatLng(start.latitude + fraction*(end.latitude-start.latitude),
+                    start.longitude + fraction*(end.longitude-start.longitude));
+        }
+    }
 }
