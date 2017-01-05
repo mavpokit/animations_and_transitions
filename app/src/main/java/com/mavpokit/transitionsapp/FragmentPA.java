@@ -93,6 +93,7 @@ public class FragmentPA extends Fragment{
         animatorSet.playSequentially(moveAnim,fadeIn,backgroundChange);
         animatorSet.start();
 
+
         super.onResume();
     }
 }
