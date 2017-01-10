@@ -1,26 +1,32 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.MenuItem;
+
+import com.mavpokit.transitionsapp.R;
+import com.mavpokit.transitionsapp.fragments.FragmentAM;
+import com.mavpokit.transitionsapp.fragments.FragmentGif;
+import com.mavpokit.transitionsapp.fragments.FragmentLT;
+import com.mavpokit.transitionsapp.fragments.FragmentPA;
+import com.mavpokit.transitionsapp.fragments.FragmentTF;
+import com.mavpokit.transitionsapp.fragments.FragmentWT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.indicator));
 
         int[]TAB_IMAGES = new int[]{
-                R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_favorite_black_24dp };
+                R.drawable.tab_icon_animated_markers,
+                R.drawable.tab_icon_window_transitions,
+                R.drawable.tab_icon_transitions,
+                R.drawable.tab_icon_property_animation,
+                R.drawable.tab_icon_layout_transitions,
+                R.drawable.tab_icon_gf_animation };
 
         final String[] TAB_NAMES = new String[]{
                 "Animated\nmarkers",
@@ -85,11 +91,14 @@ public class MainActivity extends AppCompatActivity {
                 "Layout\nTransitions",
                 "Gif\nanimation" };
 
-        for (int i=0;i<tabLayout.getTabCount();i++)
-            tabLayout.getTabAt(i).setIcon(R.drawable.ic_favorite_black_24dp);
+        //set icons and color them with inactivetab color
+        for (int i=0;i<tabLayout.getTabCount();i++){
+            tabLayout.getTabAt(i).setIcon(TAB_IMAGES[i]);
+            tabLayout.getTabAt(i).getIcon().setColorFilter(getResources().getColor(R.color.inactiveTab), PorterDuff.Mode.SRC_IN);
+        }
 
         //mark first tab icon with color at startup
-        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
         setTitle(TAB_NAMES[0]);
 
         //for toolabar title change when scrolling tabs
@@ -107,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 //                setTitle(tab.getText()); //comment if tab has only icon
-                tab.getIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+                tab.getIcon().setColorFilter(getResources().getColor(R.color.selectedTab), PorterDuff.Mode.SRC_IN);
             }
 
             @Override
@@ -123,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int position = 0;
+                int position = -1;
                 switch (item.getItemId()){
                     case R.id.menu_1: position=0;break;
                     case R.id.menu_2: position=1;break;
@@ -131,12 +140,34 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_4: position=3;break;
                     case R.id.menu_5: position=4;break;
                     case R.id.menu_6: position=5;break;
+                    case R.id.menu_about:
+                        showAboutInfo();
+                        break;
+                    case R.id.menu_github:
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://github.com/mavpokit"));
+//                        Intent chooser = Intent.createChooser(intent,"open github repo");
+                        Intent chooser = intent;
+                        if (chooser.resolveActivity(getPackageManager())!=null)
+                            startActivity(chooser);
+                        break;
+
                 }
-                tabLayout.getTabAt(position).select();
+                if (position>-1)
+                    tabLayout.getTabAt(position).select();
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+    }
+
+    private void showAboutInfo() {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
+        builder.setTitle(R.string.about);
+        builder.setMessage(R.string.about_message);
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 
     private FragmentPagerAdapter getPagerAdapter() {

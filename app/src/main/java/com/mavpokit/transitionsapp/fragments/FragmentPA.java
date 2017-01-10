@@ -1,4 +1,4 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.fragments;
 
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
@@ -22,6 +22,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.mavpokit.transitionsapp.R;
 
 /**
  * Created by Alex on 21.12.2016.

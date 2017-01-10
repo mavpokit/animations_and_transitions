@@ -1,4 +1,4 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.fragments;
 
 import android.animation.LayoutTransition;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.mavpokit.transitionsapp.R;
 
 /**
  * Created by Alex on 12.12.2016.

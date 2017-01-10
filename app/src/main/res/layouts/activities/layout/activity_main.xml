@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     tools:openDrawer="start">
 
 
@@ -18,25 +18,28 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.mavpokit.transitionsapp.MainActivity">
+        tools:context="com.mavpokit.transitionsapp.activities.MainActivity">
 
         <include layout="@layout/toolbar" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/sliding_tabs"
+            style="@style/MyCustomTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/my_toolbar"
-            style="@style/MyCustomTabLayout"
+            android:background="@color/colorPrimary"
+            android:elevation="10dp"
+            app:tabGravity="fill"
             app:tabMode="fixed" />
-        <!--android:background="@color/colorPrimary"-->
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/sliding_tabs"
-            android:background="@android:color/white" />
+            />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
@@ -45,12 +48,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@drawable/nav_view"
-        android:textColorSecondary="#0000ff"
         android:fitsSystemWindows="true"
+        android:textColorSecondary="#0000ff"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/menu_drawer"
+        app:itemIconTint="#ffff00"
         app:itemTextColor="#FFFFFF"
-        app:itemIconTint="#ffff00"/>
+        app:menu="@menu/menu_drawer" />
     <!--android:background="#707070"-->
 
 </android.support.v4.widget.DrawerLayout>

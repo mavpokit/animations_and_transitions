@@ -2,14 +2,20 @@
 <resources>
     <color name="colorPrimary">#3fb5b1</color>
     <color name="colorPrimaryDark">#267c72</color>
+    <color name="colorPrimaryMidDark">#389f9c</color>
     <color name="colorPrimaryLight">#4ae9d6</color>
     <color name="colorAccent">#FFA000</color>
-    <color name="indicator">#e77b00</color>
+    <color name="colorAccentDark">#e26b03</color>
+    <color name="indicator">#FFFFFF</color>
+    <color name="indicatorDark">#e77b00</color>
     <color name="yellow">#FFFF00</color>
     <color name="white">#FFFFFF</color>
     <color name="backg1">#eeeeee</color>
     <color name="backg2">#DDDDDD</color>
     <color name="textColorSecondary">#00FF00</color>
-    <color name="darkGray">#555555</color>
-    <color name="inactiveTab">#aaaaaa</color>
+    <color name="darkGray">#444444</color>
+    <color name="inactiveTab">#b8e6d5</color>
+    <color name="selectedTab">@color/white</color>
+    <color name="colorPrimaryDetail">#03369f</color>
+    <color name="colorPrimaryBackground">#d8e6d5</color>
 </resources>

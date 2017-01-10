@@ -1,4 +1,4 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.fragments;
 
 import android.Manifest;
 import android.animation.AnimatorSet;
@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mavpokit.transitionsapp.R;
 
 /**
  * Created by Alex on 21.12.2016.

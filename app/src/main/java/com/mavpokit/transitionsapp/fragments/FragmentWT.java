@@ -1,11 +1,9 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.fragments;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -17,6 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.mavpokit.transitionsapp.activities.DetailActivity;
+import com.mavpokit.transitionsapp.activities.DetailActivity2;
+import com.mavpokit.transitionsapp.R;
 
 /**
  * Created by Alex on 13.12.2016.
@@ -48,6 +50,7 @@ public class FragmentWT extends Fragment {
         Button buttonCombined = (Button)view.findViewById(R.id.buttonCombined);
         Button buttonSlide = (Button)view.findViewById(R.id.buttonSlide);
         final ImageView imageViewFish = (ImageView) view.findViewById(R.id.imageviewFish);
+        final ImageView imageViewFishSharedElement = (ImageView) view.findViewById(R.id.imageviewFishSharedElement);
 
         buttonDefault.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +113,16 @@ public class FragmentWT extends Fragment {
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.fish_small);
                 Bundle bundle = ActivityOptions.makeThumbnailScaleUpAnimation(imageViewFish,bitmap,0,0).toBundle();
                 startActivity(intent,bundle);
+            }
+        });
 
-
+        imageViewFishSharedElement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getActivity(),DetailActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),(View)imageViewFishSharedElement,"sharedFish");
+                startActivity(intent,options.toBundle());
             }
         });
 

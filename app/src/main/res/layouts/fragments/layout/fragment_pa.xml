@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pa_container"
     android:layout_width="match_parent"
+    android:padding="@dimen/fragment_padding"
+    android:background="@color/colorPrimaryBackground"
     android:layout_height="match_parent">
 
     <TextView

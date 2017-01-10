@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
-    android:padding="5dp">
+    android:background="@color/colorPrimaryBackground"
+    android:padding="@dimen/fragment_padding">
 
     <Button
         android:id="@+id/buttonDefault"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="default" />
 
@@ -19,7 +18,6 @@
         android:id="@+id/buttonAlpha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_below="@id/buttonDefault"
         android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="alpha" />
@@ -28,7 +26,6 @@
         android:id="@+id/buttonSlide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_below="@id/buttonAlpha"
         android:theme="@style/ThemeOverlay.MyDarkButton"
         android:text="slide" />
@@ -63,20 +60,51 @@
         android:text="rotate" />
 
 
+    <View
+        android:id="@+id/centerHorizontalLineView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="3dp"
+        android:layout_centerHorizontal="true"/>
+
+
     <android.support.v7.widget.CardView
+        android:id="@+id/cardViewFish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/buttonDefault"
         app:cardUseCompatPadding="true"
-        android:layout_centerHorizontal="true">
+        android:layout_toLeftOf="@id/centerHorizontalLineView"
+        >
 
         <ImageView
             android:id="@+id/imageviewFish"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:src="@drawable/fish"
             android:layout_centerHorizontal="true"
             android:background="@color/backg2"
+            />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/CardViewFishShared"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/buttonDefault"
+        app:cardUseCompatPadding="true"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/centerHorizontalLineView"
+        >
+
+        <ImageView
+            android:id="@+id/imageviewFishSharedElement"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fish"
+            android:layout_centerHorizontal="true"
+            android:background="@color/backg2"
+            android:transitionName="sharedFish"
             />
     </android.support.v7.widget.CardView>
 

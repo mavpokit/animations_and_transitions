@@ -1,4 +1,4 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.mavpokit.transitionsapp.R;
 
 /**
  * Created by Alex on 23.12.2016.

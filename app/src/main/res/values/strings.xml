@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Animations \u0026 Transitions</string>
+    <string name="app_name">Animations \u0026 Transitions Demo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="no_data_available">Enter your query</string>
+    <string name="email">kota.shumaher@gmail.com</string>
+    <string name="about">About Animations \u0026 Transitions</string>
+    <string name="about_message"> Simple app for demonstrating features of animations and
+        transitions framework. Doesn\'t include legacy view animation\n\nDeveloped by Mavpokit \u00a9 2017</string>
 </resources>

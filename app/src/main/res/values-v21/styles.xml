@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!--<item name="android:textColorSecondary">@color/textColorSecondary</item>-->
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="DetailTheme" parent="AppTheme">

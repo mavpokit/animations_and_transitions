@@ -1,7 +1,9 @@
-package com.mavpokit.transitionsapp;
+package com.mavpokit.transitionsapp.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.mavpokit.transitionsapp.R;
 
 public class DetailActivity2 extends AppCompatActivity {
 
