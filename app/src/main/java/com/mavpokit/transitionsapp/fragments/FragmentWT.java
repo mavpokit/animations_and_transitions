@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.mavpokit.transitionsapp.activities.DetailActivity;
-import com.mavpokit.transitionsapp.activities.DetailActivity2;
 import com.mavpokit.transitionsapp.R;
 
 /**
@@ -37,7 +36,7 @@ public class FragmentWT extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView");
         View view = inflater.inflate(R.layout.fragment_wt,container,false);
 
@@ -56,6 +55,7 @@ public class FragmentWT extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra("title","Default Transition");
                 startActivity(intent);
             }
         });
@@ -65,8 +65,9 @@ public class FragmentWT extends Fragment {
         buttonAlpha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(getActivity(),DetailActivity2.class);
-                intent.putExtra(DetailActivity2.ANIM_MODE,DetailActivity2.ANIM_ALPHA);
+                Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra(DetailActivity.ANIM_MODE, DetailActivity.ANIM_ALPHA);
+                intent.putExtra("title","Alpha Transition");
                 startActivity(intent);
             }
         });
@@ -74,8 +75,9 @@ public class FragmentWT extends Fragment {
         buttonScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(getActivity(),DetailActivity2.class);
-                intent.putExtra(DetailActivity2.ANIM_MODE,DetailActivity2.ANIM_SCALE);
+                Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra(DetailActivity.ANIM_MODE, DetailActivity.ANIM_SCALE);
+                intent.putExtra("title","Scale Transition");
                 startActivity(intent);
             }
         });
@@ -83,8 +85,9 @@ public class FragmentWT extends Fragment {
         buttonRotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(getActivity(),DetailActivity2.class);
-                intent.putExtra(DetailActivity2.ANIM_MODE,DetailActivity2.ANIM_ROTATE);
+                Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra(DetailActivity.ANIM_MODE, DetailActivity.ANIM_ROTATE);
+                intent.putExtra("title","Rotate Transition");
                 startActivity(intent);
             }
         });
@@ -92,8 +95,9 @@ public class FragmentWT extends Fragment {
         buttonCombined.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(getActivity(),DetailActivity2.class);
-                intent.putExtra(DetailActivity2.ANIM_MODE,DetailActivity2.ANIM_COMBINED);
+                Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra(DetailActivity.ANIM_MODE, DetailActivity.ANIM_COMBINED);
+                intent.putExtra("title","Combined Transition");
                 startActivity(intent);
             }
         });
@@ -109,6 +113,7 @@ public class FragmentWT extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra("title","Thumbnail Scale Up Animation");
 //                Bitmap bitmap = ((BitmapDrawable)imageViewFish.getDrawable()).getBitmap();
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.fish_small);
                 Bundle bundle = ActivityOptions.makeThumbnailScaleUpAnimation(imageViewFish,bitmap,0,0).toBundle();
@@ -120,6 +125,7 @@ public class FragmentWT extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),DetailActivity.class);
+                intent.putExtra("title","Shared Element Transition");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),(View)imageViewFishSharedElement,"sharedFish");
                 startActivity(intent,options.toBundle());

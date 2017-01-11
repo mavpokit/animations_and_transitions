@@ -64,7 +64,7 @@
         android:id="@+id/centerHorizontalLineView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="3dp"
+        android:layout_margin="0dp"
         android:layout_centerHorizontal="true"/>
 
 
@@ -74,16 +74,20 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/buttonDefault"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="4dp"
+        app:contentPadding="2dp"
+        app:cardBackgroundColor="@color/colorPrimary"
         android:layout_toLeftOf="@id/centerHorizontalLineView"
         >
 
         <ImageView
             android:id="@+id/imageviewFish"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_width="66dp"
+            android:layout_height="99dp"
             android:src="@drawable/fish"
             android:layout_centerHorizontal="true"
             android:background="@color/backg2"
+
             />
     </android.support.v7.widget.CardView>
 
@@ -93,14 +97,17 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/buttonDefault"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:contentPadding="2dp"
         android:layout_centerHorizontal="true"
         android:layout_toRightOf="@id/centerHorizontalLineView"
         >
 
         <ImageView
             android:id="@+id/imageviewFishSharedElement"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_width="66dp"
+            android:layout_height="99dp"
             android:src="@drawable/fish"
             android:layout_centerHorizontal="true"
             android:background="@color/backg2"
@@ -113,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/buttonSlide"
-        android:layout_margin="2dp"
+        android:layout_margin="1dp"
         android:id="@+id/separator_view"
         android:background="@android:color/black"/>
 

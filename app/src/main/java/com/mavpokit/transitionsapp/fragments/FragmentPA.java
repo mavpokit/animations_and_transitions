@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
@@ -24,12 +25,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mavpokit.transitionsapp.R;
+import com.mavpokit.transitionsapp.activities.MainActivity;
 
 /**
  * Created by Alex on 21.12.2016.
  */
 
-public class FragmentPA extends Fragment{
+public class FragmentPA extends Fragment implements MainActivity.FragmentPASelectedListener{
     private static final String TAG = "-----FragmentPA-----";
 
     TextView textView;
@@ -56,10 +58,16 @@ public class FragmentPA extends Fragment{
     }
 
     @Override
-    public void onResume() {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)getActivity()).setPaListener(this);
+    }
+
+    @Override
+    public void fragmentSelected() {
         ObjectAnimator fadeIn = ObjectAnimator.ofFloat(imageView,View.ALPHA,0f,1f);
 //        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(imageView,"alpha",0f,1f);
-        final int duration=1300;
+        final int duration=1500;
         fadeIn.setDuration(duration);
         fadeIn.setRepeatCount(1);
 //        fadeIn.setStartDelay(500);
@@ -72,30 +80,31 @@ public class FragmentPA extends Fragment{
 //        fadeOut.setStartDelay(duration);
 //        fadeOut.start();
 
-        //final position of textView shiold be in the center of display
+        //final position of textView should be in the center of display
         Display display = getActivity().getWindowManager().getDefaultDisplay();
+        textView.setAlpha(1);//must set to 1 because after previus animation, it is 0 and not visible
         textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         int textViewWidth = textView.getMeasuredWidth();
         int x = display.getWidth()/2 - textViewWidth/2;
         ObjectAnimator moveAnim = ObjectAnimator.ofFloat(textView,View.X,0,x);
         moveAnim.setInterpolator(new BounceInterpolator());
-        moveAnim.setDuration(700);
+        moveAnim.setDuration(1000);
 //        moveAnim.start();
 
         ObjectAnimator backgroundChange;
 // if using ofInt for color change, color changes by steps, so we need to use ofObject with argEvaluator
 //        backgroundChange = ObjectAnimator.ofInt(paContainer,"backgroundColor", 0xffffffff, 0x55ff0000,0x5500ff00,0x550000ff,0xffffffff);
         backgroundChange = ObjectAnimator.ofObject(paContainer,"backgroundColor", new ArgbEvaluator(),
-                0xffffffff,getResources().getColor(R.color.colorPrimary),0xffffffff);
+                getResources().getColor(R.color.colorPrimaryBackground),
+                getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.colorPrimaryBackground));
         backgroundChange.setDuration(3000);
 
-        textView.animate().alpha(0).setStartDelay(2000).setDuration(1000);
+        textView.animate().alpha(0).setStartDelay(2500).setDuration(1000);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playSequentially(moveAnim,fadeIn,backgroundChange);
         animatorSet.start();
 
-
-        super.onResume();
     }
 }

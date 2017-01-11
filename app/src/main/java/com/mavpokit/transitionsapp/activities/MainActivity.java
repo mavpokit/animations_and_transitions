@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private DrawerLayout drawerLayout;
+    private FragmentPASelectedListener paListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 setTitle(TAB_NAMES[position]);
+                if (TAB_NAMES[position].equals("Property\nanimation"))
+                    paListener.fragmentSelected();
             }
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
             @Override public void onPageScrollStateChanged(int state) {}
@@ -181,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     new FragmentLT(),
                     new FragmentGif()};
 
+
             private static final String TAG = "-----PagerAdapter-----";
 
             final int PAGE_COUNT = 6;
@@ -234,5 +238,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public interface FragmentPASelectedListener{
+        void fragmentSelected();
+    }
+
+    public void setPaListener(FragmentPASelectedListener paListener) {
+        this.paListener = paListener;
     }
 }

@@ -23,7 +23,7 @@
             android:name=".activities.DetailActivity"
             android:theme="@style/DetailTheme"></activity>
         <activity
-            android:name=".activities.DetailActivity2"
+            android:name=".activities.DetailActivity"
             android:theme="@style/DetailTheme"></activity>
 
         <meta-data
