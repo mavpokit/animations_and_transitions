@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.menu_github:
                         Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://github.com/mavpokit"));
+                        intent.setData(Uri.parse("https://github.com/mavpokit/animations_and_transitions"));
 //                        Intent chooser = Intent.createChooser(intent,"open github repo");
                         Intent chooser = intent;
                         if (chooser.resolveActivity(getPackageManager())!=null)
