@@ -7,4 +7,5 @@
     <string name="about">About Animations \u0026 Transitions</string>
     <string name="about_message"> Simple app for demonstrating features of animations and
         transitions framework. Doesn\'t include legacy view animation\n\nDeveloped by Mavpokit \u00a9 2017</string>
+    <string name="github_message">Open project on github in browser?</string>
 </resources>

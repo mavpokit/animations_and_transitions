@@ -14,9 +14,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/fish"
+        android:src="@drawable/fish3"
         android:transitionName="sharedFish"
-        android:layout_margin="40dp"
+        android:layout_margin="1dp"
+        android:scaleType="fitXY"
         android:id="@+id/imageviewFishSharedElement"/>
         <!--to make shared elenent animation, id's of shared elements must be the same -->
     <TextView
@@ -26,6 +27,6 @@
         android:layout_centerHorizontal="true"
         android:textSize="25sp"
         android:textStyle="bold|italic"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/yellow"
         android:id="@+id/textViewDetailActivityTitle" />
 </RelativeLayout>

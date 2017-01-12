@@ -125,7 +125,7 @@ public class FragmentWT extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),DetailActivity.class);
-                intent.putExtra("title","Shared Element Transition");
+                intent.putExtra("title","Shared Element Transition \n(works on Lollipop and higher)");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),(View)imageViewFishSharedElement,"sharedFish");
                 startActivity(intent,options.toBundle());

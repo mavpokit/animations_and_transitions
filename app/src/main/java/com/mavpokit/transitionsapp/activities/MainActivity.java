@@ -1,5 +1,6 @@
 package com.mavpokit.transitionsapp.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -147,12 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         showAboutInfo();
                         break;
                     case R.id.menu_github:
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("https://github.com/mavpokit/animations_and_transitions"));
-//                        Intent chooser = Intent.createChooser(intent,"open github repo");
-                        Intent chooser = intent;
-                        if (chooser.resolveActivity(getPackageManager())!=null)
-                            startActivity(chooser);
+                        showGithubOpenDialog();
                         break;
 
                 }
@@ -162,6 +158,29 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void showGithubOpenDialog() {
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
+//        builder.setTitle(R.string.about);
+        builder.setMessage(R.string.github_message);
+        builder.setNegativeButton("Cancel",null);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/mavpokit/animations_and_transitions"));
+                //Intent chooser = Intent.createChooser(intent,"open github repo");
+                Intent chooser = intent;
+                if (chooser.resolveActivity(getPackageManager())!=null)
+                    startActivity(chooser);
+            }
+        });
+
+        builder.show();
+
     }
 
     private void showAboutInfo() {

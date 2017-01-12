@@ -2,29 +2,27 @@ package com.mavpokit.transitionsapp.fragments;
 
 import android.Manifest;
 import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
-import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,11 +47,85 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 
     private GoogleMap mMap;
 
+    //for toast delay on start
+    CountDownTimer timer; //for implementation with CountDownTimer
+    Handler handler; //for implementation with CountDownTimer
+    Runnable runnable;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+        showToastDelayedByTimer("Click on map to place marker",1000);
+        checkNetworkConnection();
 
+    }
+
+    private void checkNetworkConnection() {
+        ConnectivityManager cm =
+                (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+    }
+
+    private void showToastDelayedByTimer(final String message, final int delay) {
+        timer = new CountDownTimer(delay,delay) {
+            @Override
+            public void onTick(long l) {}
+
+            @Override
+            public void onFinish() {
+                Toast toast = Toast.makeText(getContext(),message,Toast.LENGTH_LONG);
+                View view = toast.getView();
+                view.setBackgroundResource(R.drawable.toast_shape_round);
+                //        view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                //        TextView textView = (TextView)view.findViewById(android.R.id.message);
+                //        textView.setTextColor(getResources().getColor(R.color.colorAccent));
+
+                toast.show();
+
+            }
+        };
+        timer.start();
+
+    }
+    private void showToastDelayedByHandler(final String message, final int delay) {
+        handler = new Handler();
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getContext(),message,Toast.LENGTH_LONG);
+                View view = toast.getView();
+                view.setBackgroundResource(R.drawable.toast_shape_round);
+                //        view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                //        TextView textView = (TextView)view.findViewById(android.R.id.message);
+                //        textView.setTextColor(getResources().getColor(R.color.colorAccent));
+
+                toast.show();
+
+            }
+        };
+        handler.postDelayed(runnable,delay);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Snackbar.make(getActivity().findViewById(R.id.map_container), "Click on map to place marker",Snackbar.LENGTH_LONG)
+//                .show();
+        setRetainInstance(true);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        timer.cancel();
+//        handler.removeCallbacks(runnable);
+        super.onDestroy();
     }
 
     @Nullable
