@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_marker_close"
+        android:icon="@drawable/menu_marker_back_icon"
+        android:title="close"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_marker_edit"
+        android:icon="@drawable/menu_marker_edit_icon"
+        android:title="delete"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_marker_copy"
+        android:icon="@drawable/menu_marker_copy_icon"
+        android:title="delete"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_marker_delete"
+        android:icon="@drawable/menu_marker_delete_icon"
+        android:title="delete"
+        app:showAsAction="always"
+        />
+</menu>

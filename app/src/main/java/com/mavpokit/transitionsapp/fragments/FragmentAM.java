@@ -18,6 +18,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,7 +44,8 @@ import com.mavpokit.transitionsapp.R;
  * Created by Alex on 21.12.2016.
  */
 
-public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnClickListener {
+public class FragmentAM extends Fragment implements
+        OnMapReadyCallback, View.OnClickListener {
     private static final String TAG = "-----FragmentAM-----";
     private static final String MAP_FRAGMENT_TAG = "MAP_FRAGMENT";
 
@@ -51,19 +55,21 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
     CountDownTimer timer; //for implementation with CountDownTimer
     Handler handler; //for implementation with CountDownTimer
     Runnable runnable;
+    private boolean markerMenuVisible = false;
+    private Marker selectedMarker = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        showToastDelayedByTimer("Click on map to place marker",1000);
+        showToastDelayedByTimer("Click on map to place marker", 1000);
         checkNetworkConnection();
 
     }
 
     private void checkNetworkConnection() {
         ConnectivityManager cm =
-                (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
@@ -72,13 +78,14 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
     }
 
     private void showToastDelayedByTimer(final String message, final int delay) {
-        timer = new CountDownTimer(delay,delay) {
+        timer = new CountDownTimer(delay, delay) {
             @Override
-            public void onTick(long l) {}
+            public void onTick(long l) {
+            }
 
             @Override
             public void onFinish() {
-                Toast toast = Toast.makeText(getContext(),message,Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
                 View view = toast.getView();
                 view.setBackgroundResource(R.drawable.toast_shape_round);
                 //        view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -92,13 +99,14 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
         timer.start();
 
     }
+
     private void showToastDelayedByHandler(final String message, final int delay) {
         handler = new Handler();
 
         runnable = new Runnable() {
             @Override
             public void run() {
-                Toast toast = Toast.makeText(getContext(),message,Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
                 View view = toast.getView();
                 view.setBackgroundResource(R.drawable.toast_shape_round);
                 //        view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -109,7 +117,7 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 
             }
         };
-        handler.postDelayed(runnable,delay);
+        handler.postDelayed(runnable, delay);
 
     }
 
@@ -118,7 +126,11 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 //        Snackbar.make(getActivity().findViewById(R.id.map_container), "Click on map to place marker",Snackbar.LENGTH_LONG)
 //                .show();
         setRetainInstance(true);
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+
         super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
@@ -147,9 +159,9 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 
         mapFragment.getMapAsync(this);
 
-        Button buttonL1 = (Button)fragmentContainer.findViewById(R.id.buttonLocation1);
-        Button buttonL2 = (Button)fragmentContainer.findViewById(R.id.buttonLocation2);
-        ImageButton buttonL3 = (ImageButton)fragmentContainer.findViewById(R.id.buttonLocation3);
+        Button buttonL1 = (Button) fragmentContainer.findViewById(R.id.buttonLocation1);
+        Button buttonL2 = (Button) fragmentContainer.findViewById(R.id.buttonLocation2);
+        ImageButton buttonL3 = (ImageButton) fragmentContainer.findViewById(R.id.buttonLocation3);
         buttonL1.setOnClickListener(this);
         buttonL2.setOnClickListener(this);
         buttonL3.setOnClickListener(this);
@@ -169,11 +181,10 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-            ||
-            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED)
-        {
+                == PackageManager.PERMISSION_GRANTED
+                ||
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
 
@@ -186,7 +197,7 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapCenter, 3));
 
-        animateCamera(11,2000,new LatLng(50.444938, 30.520794));
+        animateCamera(11, 2000, new LatLng(50.444938, 30.520794));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -196,57 +207,79 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 
                 Projection projecion = mMap.getProjection();
                 Point point = projecion.toScreenLocation(latLng);
-                point.offset(0,dpToPixels(-200));
+                point.offset(0, dpToPixels(-200));
                 LatLng startLatLng = projecion.fromScreenLocation(point);
 
-                Marker marker =  mMap.addMarker(new MarkerOptions()
+                Marker marker = mMap.addMarker(new MarkerOptions()
                                 .title("Achtung!")
+                                .snippet("Radiation level:777")
                                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.radioact1))
 //                                .position(latLng)
                                 .position(startLatLng)
-                                .anchor(0.5f,0.5f)
-                //                .flat(true)
-                //                .rotation(245)
+                                .draggable(true)
+                                .anchor(0.5f, 0.5f)
+                        //                .flat(true)
+                        //                .rotation(245)
                 );
 
-                ObjectAnimator posAnimator = ObjectAnimator.ofObject(marker,"position",new LatLngEvaluator(),startLatLng,latLng);
+                ObjectAnimator posAnimator = ObjectAnimator.ofObject(marker, "position", new LatLngEvaluator(), startLatLng, latLng);
                 posAnimator.setDuration(200);
 //                posAnimator.setInterpolator(new BounceInterpolator());
 //                posAnimator.start();
 
-                ObjectAnimator rotAnimator = ObjectAnimator.ofFloat(marker,"rotation",180,360);
+                ObjectAnimator rotAnimator = ObjectAnimator.ofFloat(marker, "rotation", 180, 360);
                 rotAnimator.setDuration(400);
 
-                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(marker,"alpha",0,1);
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(marker, "alpha", 0, 1);
                 alphaAnimator.setDuration(600);
 //                rotAnimator.start();
 
                 AnimatorSet animatorSet = new AnimatorSet();
-                animatorSet.playTogether(posAnimator,rotAnimator,alphaAnimator);
+                animatorSet.playTogether(posAnimator, rotAnimator, alphaAnimator);
                 animatorSet.start();
+
+                //close marker menu if it is open
+                if (selectedMarker!=null){
+                    selectedMarker=null;
+                    markerMenuVisible = false;
+                    getActivity().invalidateOptionsMenu();
+                }
 
 
             }
         });
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+//                showToastDelayedByTimer(marker.getTitle(),0);
+                selectedMarker = marker;
+                markerMenuVisible = true;
+                getActivity().invalidateOptionsMenu();
+                return false;
+//                return true;
+            }
+        });
+
+
     }
 
     private int dpToPixels(int dp) {
-        return (int)(dp * getResources().getDisplayMetrics().density + 0.5f );
+        return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
     }
 
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.buttonLocation1:
-                animateCamera(8,2000,new LatLng(50.444938, 20.520794));
+                animateCamera(8, 2000, new LatLng(50.444938, 20.520794));
                 break;
             case R.id.buttonLocation2:
-                animateCamera(10,2000,new LatLng(50.444938, 10.520794));
+                animateCamera(10, 2000, new LatLng(50.444938, 10.520794));
                 break;
             case R.id.buttonLocation3:
-                animateCamera(11,2000,new LatLng(50.444938, 30.520794));
+                animateCamera(11, 2000, new LatLng(50.444938, 30.520794));
                 break;
 
         }
@@ -260,7 +293,7 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
                 .build();
 
         // Animate the change in camera view over time_ms milliseconds
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),time_ms, null);
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), time_ms, null);
 
     }
 
@@ -268,8 +301,51 @@ public class FragmentAM extends Fragment implements OnMapReadyCallback,View.OnCl
 
         @Override
         public LatLng evaluate(float fraction, LatLng start, LatLng end) {
-            return new LatLng(start.latitude + fraction*(end.latitude-start.latitude),
-                    start.longitude + fraction*(end.longitude-start.longitude));
+            return new LatLng(start.latitude + fraction * (end.latitude - start.latitude),
+                    start.longitude + fraction * (end.longitude - start.longitude));
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_marker_options, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_marker_close:
+                selectedMarker.hideInfoWindow();
+                markerMenuVisible = false;
+                getActivity().invalidateOptionsMenu();
+                selectedMarker=null;
+                return true;
+            case R.id.menu_marker_copy:
+                showToastDelayedByTimer("Copied: " + selectedMarker.getSnippet(), 0);
+                return true;
+            case R.id.menu_marker_edit:
+                showToastDelayedByTimer("Edited: " + selectedMarker.getSnippet(), 0);
+                return true;
+            case R.id.menu_marker_delete:
+                selectedMarker.remove();
+                markerMenuVisible = false;
+                getActivity().invalidateOptionsMenu();
+                selectedMarker=null;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        for (int i = 0; i <4 ; i++)
+            menu.getItem(i).setVisible(markerMenuVisible);
+
+        super.onPrepareOptionsMenu(menu);
     }
 }

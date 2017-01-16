@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.mavpokit.transitionsapp.R;
+import com.mavpokit.transitionsapp.dialogs.AboutDialog;
+import com.mavpokit.transitionsapp.dialogs.GithubOpenDialog;
 import com.mavpokit.transitionsapp.fragments.FragmentAM;
 import com.mavpokit.transitionsapp.fragments.FragmentGif;
 import com.mavpokit.transitionsapp.fragments.FragmentLT;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
@@ -162,34 +166,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showGithubOpenDialog() {
 
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(this);
-//        builder.setTitle(R.string.about);
-        builder.setMessage(R.string.github_message);
-        builder.setNegativeButton("Cancel",null);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://github.com/mavpokit/animations_and_transitions"));
-                //Intent chooser = Intent.createChooser(intent,"open github repo");
-                Intent chooser = intent;
-                if (chooser.resolveActivity(getPackageManager())!=null)
-                    startActivity(chooser);
-            }
-        });
-
-        builder.show();
+        (new GithubOpenDialog()).show(getSupportFragmentManager(),"GithubOpenDialog");
 
     }
 
     private void showAboutInfo() {
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(this);
-        builder.setTitle(R.string.about);
-        builder.setMessage(R.string.about_message);
-        builder.setPositiveButton("OK", null);
-        builder.show();
+        (new AboutDialog()).show(getSupportFragmentManager(),"AboutDialog");
     }
 
     private FragmentPagerAdapter getPagerAdapter() {
